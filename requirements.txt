@@ -5,3 +5,4 @@ requests
 ffmpeg-python
 loguru
 schedule 
+pytest 
