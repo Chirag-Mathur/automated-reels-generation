@@ -1,0 +1,1 @@
+# Scheduler 1: News Fetch logic 

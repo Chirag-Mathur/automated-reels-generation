@@ -1,0 +1,1 @@
+# Tests for Scheduler 1: News Fetch 

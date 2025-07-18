@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    container_name: autonomous-video-generator
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+      - ./google-credentials:/credentials:ro
+    depends_on:
+      - mongo
+    command: ["python", "-m", "app"]
+  mongo:
+    image: mongo:6
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+volumes:
+  mongo_data: 

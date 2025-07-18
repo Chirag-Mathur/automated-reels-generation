@@ -1,0 +1,1 @@
+# Script to seed the MongoDB database with initial data 

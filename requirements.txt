@@ -1,0 +1,7 @@
+pymongo
+python-dotenv
+google-cloud-storage
+requests
+ffmpeg-python
+loguru
+schedule 
