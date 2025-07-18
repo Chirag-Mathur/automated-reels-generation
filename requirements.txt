@@ -6,3 +6,4 @@ ffmpeg-python
 loguru
 schedule 
 pytest 
+pydantic 
