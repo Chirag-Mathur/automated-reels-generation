@@ -7,3 +7,5 @@ loguru
 schedule 
 pytest 
 pydantic 
+feedparser
+beautifulsoup4

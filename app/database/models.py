@@ -16,7 +16,7 @@ class UnifiedNewsDoc(BaseModel):
     Mirrors the schema and status conventions described in the PRD.
     Note: 'domain' is a free-form string and not a fixed enum; values can be changed or extended as needed.
     """
-    _id: Optional[str] = Field(None, description="MongoDB ObjectId as string")
+    _id: Optional[str] = None
     headline: str
     article: str
     domain: str  # Domain is not fixed; can be changed/extended
@@ -24,21 +24,21 @@ class UnifiedNewsDoc(BaseModel):
     published_at: datetime
     # Pipeline Meta
     status: str  # Use enums below for allowed values
-    relevancy: Optional[int] = Field(None, ge=0, le=10)
-    sentiment: Optional[Literal["positive", "neutral", "negative"]]
-    video_title: Optional[str]
-    hashtags: Optional[List[str]]
-    caption: Optional[str]
-    script: Optional[List[ScriptSlide]]
-    image_urls: Optional[List[str]]
-    voiceover_url: Optional[str]
-    video_url: Optional[str]
-    youtube_id: Optional[str]
-    instagram_id: Optional[str]
+    relevancy: Optional[int] = None
+    sentiment: Optional[Literal["positive", "neutral", "negative"]] = None
+    video_title: Optional[str] = None
+    hashtags: Optional[List[str]] = None
+    caption: Optional[str] = None
+    script: Optional[List[ScriptSlide]] = None
+    image_urls: Optional[List[str]] = None
+    voiceover_url: Optional[str] = None
+    video_url: Optional[str] = None
+    youtube_id: Optional[str] = None
+    instagram_id: Optional[str] = None
     # Error Handling
-    error_type: Optional[str]
-    error_message: Optional[str]
-    error_at: Optional[datetime]
+    error_type: Optional[str] = None
+    error_message: Optional[str] = None
+    error_at: Optional[datetime] = None
 
     class Config:
         schema_extra = {
