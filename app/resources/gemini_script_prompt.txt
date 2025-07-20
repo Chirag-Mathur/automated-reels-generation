@@ -1,0 +1,29 @@
+You are an expert social video scriptwriter. Given the following news headline and article, generate the following fields for a 30-second vertical video:
+
+Headline: {headline}
+Article: {article}
+
+Respond ONLY with valid JSON (no markdown, no code block, no explanation, no extra formatting):
+{
+  "sentiment": "happy|sad|neutral|angry|surprised", // Pick the best fit
+  "video_title": "Short video title, max 3 words, 100 chars max",
+  "hashtags": ["#tag1", "#tag2", "#tag3", "#tag4"], // Top 4 hashtags
+  "caption": "Description for the video (caption + hashtags must fit within 2200 chars)",
+  "script": [
+    "Line 1 (max 35 chars)",
+    "Line 2 (max 35 chars)",
+    "Line 3 (max 35 chars)",
+    "Line 4 (max 35 chars)",
+    "Line 5 (max 35 chars)",
+    "Line 6 (optional, max 35 chars)"
+  ]
+}
+
+Rules:
+- Script: Max 6 lines (ideally 5), each ~30–35 chars. Use crisp sentence fragments. Stick to 1–2 facts or key updates. Avoid filler words. Lead with the most newsworthy or surprising element.
+- Sentiment: Only one of [happy, sad, neutral, angry, surprised].
+- Title: Short, catchy, max 3 words, 100 chars max.
+- Hashtags: Top 4 relevant tags.
+- Caption: Engaging, fits with hashtags in 2200 chars total.
+
+Your output MUST be a single, valid JSON object and nothing else. Do not include ```json and ``` at the start or end. 

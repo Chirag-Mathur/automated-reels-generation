@@ -1,0 +1,57 @@
+[
+  {
+    "source": "Pinkvilla",
+    "url": "https://www.pinkvilla.com/rss.xml",
+    "tags": ["entertainment"]
+  },
+  {
+    "source": "The Verge",
+    "url": "https://www.theverge.com/rss/index.xml",
+    "tags": ["tech"]
+  },
+  {
+    "source": "TechCrunch",
+    "url": "https://techcrunch.com/feed/",
+    "tags": ["tech"]
+  },
+  {
+    "source": "Sportskeeda - Esports",
+    "url": "https://www.sportskeeda.com/feed/category/esports",
+    "tags": ["sports"]
+  },
+  {
+    "source": "Game Rant",
+    "url": "https://gamerant.com/feed/",
+    "tags": ["sports"]
+  },
+  {
+    "source": "The Hindu - Politics",
+    "url": "https://www.thehindu.com/news/national/feeder/default.rss",
+    "tags": ["politics"]
+  },
+  {
+    "source": "NDTV - India News",
+    "url": "https://feeds.feedburner.com/ndtvnews-india-news",
+    "tags": ["politics"]
+  },
+  {
+    "source": "India Today - Politics",
+    "url": "https://www.indiatoday.in/rss/1206584",
+    "tags": ["politics"]
+  },
+  {
+    "source": "Business Standard - Finance",
+    "url": "https://www.business-standard.com/rss/finance-101.rss",
+    "tags": ["finance"]
+  },
+  {
+    "source": "Moneycontrol - Latest News",
+    "url": "https://www.moneycontrol.com/rss/latestnews.xml",
+    "tags": ["finance"]
+  },
+  {
+    "source": "Economic Times - Industry News",
+    "url": "https://economictimes.indiatimes.com/rssfeeds/13352306.cms",
+    "tags": ["finance"]
+  }
+]
