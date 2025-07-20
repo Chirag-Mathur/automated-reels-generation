@@ -27,7 +27,7 @@ def process_video_generated_articles():
     if collection is None:
         logger.error("Could not get MongoDB collection 'news'. Skipping processing.")
         return
-    articles = list(collection.find({"status": "VIDEO_GENERATED"}).limit(1))
+    articles = list(collection.find({"status": "VIDEO_GENERATED"}).sort([("relevancy", -1)]).limit(1))
     logger.info(f"Found {len(articles)} articles with status VIDEO_GENERATED ")
     for doc in articles:
         doc_id = doc["_id"]

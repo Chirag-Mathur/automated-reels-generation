@@ -42,7 +42,7 @@ def process_script_generated_articles():
     if collection is None:
         logger.error("Could not get MongoDB collection 'news'. Skipping processing.")
         return
-    articles = list(collection.find({"status": "SCRIPT_GENERATED"}).limit(1))
+    articles = list(collection.find({"status": "SCRIPT_GENERATED"}).sort([("relevancy", -1)]).limit(2))
     logger.info(f"Found {len(articles)} articles with status SCRIPT_GENERATED ")
     for doc in articles:
         doc_id = doc["_id"]

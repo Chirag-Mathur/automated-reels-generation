@@ -1,16 +1,21 @@
 import os
 from google.cloud import storage
 from google.oauth2 import service_account
-
-# Path to your service account key file
-SERVICE_ACCOUNT_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'gen-lang-client-0358368686-dec7ce5b2e58.json')
+from app.config import settings
 
 # Set your bucket name here
 GCS_BUCKET_NAME = os.environ.get('GCS_BUCKET_NAME', 'YOUR_BUCKET_NAME')
 
 class GCSClient:
-    def __init__(self, bucket_name: str = GCS_BUCKET_NAME, credentials_path: str = SERVICE_ACCOUNT_FILE):
-        self.credentials = service_account.Credentials.from_service_account_file(credentials_path)
+    def __init__(self, bucket_name: str = GCS_BUCKET_NAME):
+        if settings.GCP_SERVICE_ACCOUNT_INFO:
+            self.credentials = service_account.Credentials.from_service_account_info(settings.GCP_SERVICE_ACCOUNT_INFO)
+        else:
+            # Fallback to GOOGLE_APPLICATION_CREDENTIALS env var or default path
+            credentials_path = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
+            if not credentials_path:
+                raise RuntimeError("No GCP service account info or credentials path provided.")
+            self.credentials = service_account.Credentials.from_service_account_file(credentials_path)
         self.client = storage.Client(credentials=self.credentials)
         self.bucket = self.client.bucket(bucket_name)
 

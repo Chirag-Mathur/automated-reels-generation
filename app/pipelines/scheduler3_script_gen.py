@@ -51,7 +51,10 @@ def process_valid_articles():
     if collection is None:
         logger.error("Could not get MongoDB collection 'news'. Skipping processing.")
         return
-    valid_articles = list(collection.find({"status": "VALID_ARTICLE"}).limit(3))
+    # Get top 10 articles sorted by relevancy desc, then created_at desc
+    valid_articles = list(collection.find({"status": "VALID_ARTICLE"}).sort([
+        ("relevancy", -1), ("created_at", -1)
+    ]).limit(10))
     logger.info(f"Found {len(valid_articles)} articles with status VALID_ARTICLE ")
     for doc in valid_articles:
         doc_id = doc["_id"]
