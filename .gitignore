@@ -92,3 +92,6 @@ test_output/
 
 # Ignore generated outputs
 outputs/ 
+
+# Google Cloud service account key
+gen-lang-client-0358368686-dec7ce5b2e58.json 

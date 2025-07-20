@@ -33,6 +33,7 @@ class UnifiedNewsDoc(BaseModel):
     image_urls: Optional[List[str]] = None
     voiceover_url: Optional[str] = None
     video_url: Optional[str] = None
+    video_local_path: Optional[str] = None
     youtube_id: Optional[str] = None
     instagram_id: Optional[str] = None
     # Error Handling

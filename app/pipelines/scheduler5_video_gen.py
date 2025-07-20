@@ -3,6 +3,7 @@ from datetime import datetime
 from app.database.mongo import get_collection
 from app.media.ffmpeg_utils import generate_video_with_overlay_and_caption
 from app.utils.logger import logger
+from app.apis.gcs_client import GCSClient
 
 NEWS_COLLECTION = 'news'
 VIDEO_RESOLUTION = "1080x1920"
@@ -65,15 +66,21 @@ def process_script_generated_articles():
                 output_path=output_path,
                 resolution=VIDEO_RESOLUTION
             )
+            # Upload to GCS
+            gcs_client = GCSClient()
+            relative_local_path = os.path.relpath(output_path, start=os.path.dirname(os.path.dirname(__file__)))
+            gcs_blob_name = f"videos/{today}/{output_filename}"
+            public_url = gcs_client.upload_file(output_path, gcs_blob_name)
             # Update DB
             collection.update_one({"_id": doc_id}, {"$set": {
-                "video_url": output_path,
+                "video_url": public_url,
+                "video_local_path": relative_local_path,
                 "status": "VIDEO_GENERATED",
                 "error_message": None,
                 "error_type": None,
                 "error_at": None
             }})
-            logger.info(f"Video generated for article '{video_title}' at {output_path}")
+            logger.info(f"Video generated and uploaded for article '{video_title}' at {public_url}")
         except Exception as e:
             logger.error(f"Video generation failed for '{video_title}': {e}")
             collection.update_one({"_id": doc_id}, {"$set": {

@@ -51,7 +51,7 @@ def process_fetched_articles():
     if collection is None:
         logger.error("Could not get MongoDB collection 'news'. Skipping processing.")
         return
-    fetched = list(collection.find({"status": "FETCHED"}))
+    fetched = list(collection.find({"status": "FETCHED"}).limit(10))
     logger.info(f"Found {len(fetched)} articles with status FETCHED ")
     for doc in fetched:
         doc_id = doc["_id"]
