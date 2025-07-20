@@ -1,10 +1,7 @@
-from flask import Flask
+from flask import Blueprint
 
-app = Flask(__name__)
+ping_bp = Blueprint('ping', __name__)
 
-@app.route("/ping", methods=["GET"])
+@ping_bp.route("/ping", methods=["GET"])
 def ping():
-    return "pong", 200
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080) 
+    return "pong", 200 

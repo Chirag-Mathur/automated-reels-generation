@@ -15,7 +15,7 @@ schedule.every(2).hours.do(process_valid_articles)
 
 def run_sequential_video_and_publish():
     process_script_generated_articles()
-    process_video_generated_articles()
+    # process_video_generated_articles()
 
 # Schedule the video generation and publishing jobs at specific UTC times
 schedule.every().day.at("03:30").do(run_sequential_video_and_publish)
