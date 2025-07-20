@@ -16,6 +16,9 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Install Waitress for production WSGI server
+RUN pip install --no-cache-dir waitress
+
 # Copy all project files
 COPY . .
 
@@ -25,5 +28,5 @@ ENV PYTHONUNBUFFERED=1
 # Load environment variables from .env manually (Railway will also inject them)
 ENV ENV_FILE=.env
 
-# Entry command (your scheduler)
-CMD ["python", "-m", "app.scheduler.cron"]
+# Entry command: run both Flask ping server and cron scheduler
+CMD bash -c 'waitress-serve --host=0.0.0.0 --port=8080 endpoints.ping_server:app & python -m app.scheduler.cron'
