@@ -40,7 +40,8 @@ def update_article_status(doc_id, status, message, error_type=None):
             "status": status,
             "error_message": message,
             "error_type": error_type,
-            "error_at": datetime.utcnow()
+            "error_at": datetime.utcnow(),
+            "mod_at": datetime.utcnow()
         }
     }
     collection.update_one({"_id": doc_id}, update)
@@ -88,7 +89,8 @@ def process_valid_articles():
                 "status": "SCRIPT_GENERATED",
                 "error_message": None,
                 "error_type": None,
-                "error_at": None
+                "error_at": None,
+                "mod_at": datetime.utcnow()
             }
         }
         collection.update_one({"_id": doc_id}, update)

@@ -21,7 +21,9 @@ class UnifiedNewsDoc(BaseModel):
     article: str
     domain: str  # Domain is not fixed; can be changed/extended
     source: str
-    published_at: datetime
+    news_link: Optional[str] = None
+    created_at: datetime
+    mod_at: Optional[datetime] = None
     # Pipeline Meta
     status: str  # Use enums below for allowed values
     relevancy: Optional[int] = None
@@ -48,7 +50,9 @@ class UnifiedNewsDoc(BaseModel):
                 "article": "Full article text...",
                 "domain": "Sports",
                 "source": "The Hindu",
-                "published_at": "2025-07-18T10:00:00Z",
+                "news_link": "https://www.example.com/news/123",
+                "created_at": "2025-07-18T10:00:00Z",
+                "mod_at": None,
                 "status": "POSTED",
                 "relevancy": 8,
                 "sentiment": "positive",

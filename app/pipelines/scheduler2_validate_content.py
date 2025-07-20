@@ -41,7 +41,8 @@ def update_article_status(doc_id, status, message, error_type=None):
             "status": status,
             "error_message": message,
             "error_type": error_type,
-            "error_at": datetime.utcnow()
+            "error_at": datetime.utcnow(),
+            "mod_at": datetime.utcnow()
         }
     }
     collection.update_one({"_id": doc_id}, update)
@@ -71,17 +72,26 @@ def process_fetched_articles():
             logger.info(f"Article '{headline}' not related to India.")
             continue
         # If valid and related to India
+        relevancy = result.get("relevancy")
+        if relevancy is not None:
+            try:
+                relevancy = int(relevancy)
+            except (TypeError, ValueError):
+                relevancy = None
+        else:
+            relevancy = None
         update = {
             "$set": {
                 "status": "VALID_ARTICLE",
                 "error_message": "Validated successfully.",
                 "error_type": None,
                 "error_at": None,
-                "relevancy": 10,  # Placeholder, can be set by Gemini if needed
+                "relevancy": relevancy,
+                "mod_at": datetime.utcnow()
             }
         }
         collection.update_one({"_id": doc_id}, update)
-        logger.info(f"Article '{headline}' marked as VALID_ARTICLE.")
+        logger.info(f"Article '{headline}' marked as VALID_ARTICLE with relevancy={relevancy}.")
 
 if __name__ == "__main__":
     process_fetched_articles() 

@@ -1,4 +1,8 @@
 # Scheduler 1: News Fetch logic 
+#
+# CRON SCHEDULE: Every 15 minutes
+# Example crontab entry:
+# */15 * * * * /usr/bin/python3 /path/to/your/project/app/pipelines/scheduler1_fetch_news.py
 import os
 import json
 from datetime import datetime, timedelta
@@ -56,12 +60,19 @@ def store_news_in_db(news_items: List[Dict], domain: str):
             article=item.get("snippet", ""),
             domain=domain.capitalize(),
             source=item.get("displayLink", ""),
-            published_at=datetime.utcnow(),
+            news_link=item.get("link", ""),
+            created_at=datetime.utcnow(),
             status="FETCHED"
         )
         # Insert as dict, omitting None fields
-        collection.insert_one({k: v for k, v in doc.dict().items() if v is not None})
-        logger.info(f"Saved news: '{doc.headline}' for domain '{domain}' to DB.")
+        try:
+            collection.insert_one({k: v for k, v in doc.dict().items() if v is not None})
+            logger.info(f"Saved news: '{doc.headline}' for domain '{domain}' to DB.")
+        except Exception as e:
+            if 'duplicate key error' in str(e):
+                logger.warning(f"Duplicate news found: '{doc.headline}' for domain '{domain}'. Skipping.")
+            else:
+                logger.error(f"Error inserting news: '{doc.headline}' for domain '{domain}': {e}")
 
 def fetch_and_store_all_domains():
     """Fetch and store news for all domains as per queries in resources/news_queries.json."""
@@ -91,12 +102,19 @@ def fetch_and_store_rss_news():
                 article=full_article or art["summary"],
                 domain=", ".join(tags),
                 source=source,
-                published_at=datetime.utcnow(),
+                news_link=art.get("link", ""),
+                created_at=datetime.utcnow(),
                 status="FETCHED"
             )
             if collection is not None:
-                collection.insert_one({k: v for k, v in doc.dict().items() if v is not None})
-                logger.info(f"Saved RSS news: '{doc.headline}' from '{source}' to DB.")
+                try:
+                    collection.insert_one({k: v for k, v in doc.dict().items() if v is not None})
+                    logger.info(f"Saved RSS news: '{doc.headline}' from '{source}' to DB.")
+                except Exception as e:
+                    if 'duplicate key error' in str(e):
+                        logger.warning(f"Duplicate RSS news found: '{doc.headline}' from '{source}'. Skipping.")
+                    else:
+                        logger.error(f"Error inserting RSS news: '{doc.headline}' from '{source}': {e}")
 
 
 if __name__ == "__main__":

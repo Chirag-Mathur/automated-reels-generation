@@ -78,7 +78,8 @@ def process_script_generated_articles():
                 "status": "VIDEO_GENERATED",
                 "error_message": None,
                 "error_type": None,
-                "error_at": None
+                "error_at": None,
+                "mod_at": datetime.utcnow()
             }})
             logger.info(f"Video generated and uploaded for article '{video_title}' at {public_url}")
         except Exception as e:
@@ -87,7 +88,8 @@ def process_script_generated_articles():
                 "status": "ERROR_VIDEO",
                 "error_message": str(e),
                 "error_type": "VIDEO_GENERATION_ERROR",
-                "error_at": datetime.utcnow()
+                "error_at": datetime.utcnow(),
+                "mod_at": datetime.utcnow()
             }})
 
 if __name__ == "__main__":

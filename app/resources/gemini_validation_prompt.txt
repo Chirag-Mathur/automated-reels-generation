@@ -2,14 +2,17 @@ You are an expert news validator. Given the following news headline, answer the 
 
 Headline: {headline}
 
-1. Is this news valid and relevant for a general audience? (Answer YES or NO)
-2. Is this news related to India? (Answer YES or NO)
+Evaluate the headline based on the following:
+1. Is it about a real, recent event (not a tutorial or evergreen guide)?
+2. Does it mention specific people, places, or trending topics?
+3. Is it likely to be engaging or interesting for Indian viewers aged 18–35?
 
 Respond ONLY with valid JSON (no markdown, no code block, no explanation, no extra formatting):
 {
   "valid": "YES or NO",
   "related_to_india": "YES or NO",
+  "relevancy": 0-10, // Integer score: 0 = not relevant, 10 = extremely relevant for Indian youth
   "reason": "Short explanation for your decision."
-} 
+}
 
 Your output MUST be a single, valid JSON object and nothing else. Do not include ```json and ``` at the start or end.
