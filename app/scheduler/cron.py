@@ -17,11 +17,11 @@ def run_sequential_video_and_publish():
     process_script_generated_articles()
     process_video_generated_articles()
 
-# Schedule the video generation and publishing jobs at specific times
-schedule.every().day.at("09:00").do(run_sequential_video_and_publish)
-schedule.every().day.at("13:00").do(run_sequential_video_and_publish)
-schedule.every().day.at("18:00").do(run_sequential_video_and_publish)
-schedule.every().day.at("21:00").do(run_sequential_video_and_publish)
+# Schedule the video generation and publishing jobs at specific UTC times
+schedule.every().day.at("03:30").do(run_sequential_video_and_publish)
+schedule.every().day.at("07:30").do(run_sequential_video_and_publish)
+schedule.every().day.at("12:30").do(run_sequential_video_and_publish)
+schedule.every().day.at("15:30").do(run_sequential_video_and_publish)
 
 def run_scheduler():
     print("Starting cron scheduler for news fetch (every 15 minutes) and script generation (every 20 minutes)...")
