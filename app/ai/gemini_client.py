@@ -3,7 +3,8 @@ from typing import Any, Dict, Optional
 from app.config.settings import GEMINI_API_KEY
 from app.utils.logger import logger
 
-GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key={}".format(GEMINI_API_KEY)
+# GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key={}".format(GEMINI_API_KEY)
+GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={}".format(GEMINI_API_KEY)
 
 
 def gemini_generate_content(prompt: str, model: str = "gemini-pro", max_retries: int = 3) -> Optional[Dict[str, Any]]:

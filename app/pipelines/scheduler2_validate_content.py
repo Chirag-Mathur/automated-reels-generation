@@ -26,6 +26,14 @@ def validate_article_with_gemini(headline: str) -> dict:
         return {"error": "No response from Gemini API."}
     try:
         text = result['candidates'][0]['content']['parts'][0]['text']
+        # Remove triple backticks and whitespace if present
+        text = text.strip()
+        if text.startswith('```json'):
+            text = text[len('```json'):].strip()
+        if text.startswith('```'):
+            text = text[len('```'):].strip()
+        if text.endswith('```'):
+            text = text[:-len('```')].strip()
         return json.loads(text)
     except Exception as e:
         logger.error(f"Raw Gemini response text: {text}")
@@ -52,8 +60,8 @@ def process_fetched_articles():
     if collection is None:
         logger.error("Could not get MongoDB collection 'news'. Skipping processing.")
         return
-    fetched = list(collection.find({"status": "FETCHED"}))
-    logger.info(f"Found {len(fetched)} articles with status FETCHED ")
+    fetched = list(collection.find({"status": {"$in": ["FETCHED", "ERROR_VALIDATE"]}}))
+    logger.info(f"Found {len(fetched)} articles with status FETCHED or ERROR_VALIDATE ")
     for doc in fetched:
         doc_id = doc["_id"]
         headline = doc["headline"]

@@ -79,7 +79,7 @@ Pipfile.lock
 # *.mp4
 *.jpg
 *.png
-*.ttf
+# *.ttf
 
 # Other
 *.sqlite3

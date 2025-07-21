@@ -25,6 +25,13 @@ def parse_gemini_script_response(result: dict) -> dict:
         return {"error": "No response from Gemini API."}
     try:
         text = result['candidates'][0]['content']['parts'][0]['text']
+        text = text.strip()
+        if text.startswith('```json'):
+            text = text[len('```json'):].strip()
+        if text.startswith('```'):
+            text = text[len('```'):].strip()
+        if text.endswith('```'):
+            text = text[:-len('```')].strip()
         return json.loads(text)
     except Exception as e:
         logger.error(f"Raw Gemini response text: {text}")
@@ -52,10 +59,10 @@ def process_valid_articles():
         logger.error("Could not get MongoDB collection 'news'. Skipping processing.")
         return
     # Get top 10 articles sorted by relevancy desc, then created_at desc
-    valid_articles = list(collection.find({"status": "VALID_ARTICLE"}).sort([
+    valid_articles = list(collection.find({"status": {"$in": ["VALID_ARTICLE", "ERROR_SCRIPT"]}}).sort([
         ("relevancy", -1), ("created_at", -1)
     ]).limit(10))
-    logger.info(f"Found {len(valid_articles)} articles with status VALID_ARTICLE ")
+    logger.info(f"Found {len(valid_articles)} articles with status VALID_ARTICLE or ERROR_SCRIPT ")
     for doc in valid_articles:
         doc_id = doc["_id"]
         headline = doc.get("headline", "")
@@ -73,7 +80,7 @@ def process_valid_articles():
             logger.error(f"Script generation failed for '{headline}': {parsed['error']}")
             continue
         # Validate required fields
-        required_fields = ["sentiment", "video_title", "hashtags", "caption", "script"]
+        required_fields = ["sentiment", "video_title", "hashtags", "caption"]
         if not all(field in parsed for field in required_fields):
             update_article_status(doc_id, "ERROR_SCRIPT", f"Missing fields in Gemini response: {parsed}", error_type="GEMINI_SCRIPT_MISSING_FIELDS")
             logger.error(f"Missing fields in Gemini response for '{headline}': {parsed}")
@@ -85,10 +92,6 @@ def process_valid_articles():
                 "video_title": parsed["video_title"],
                 "hashtags": parsed["hashtags"],
                 "caption": parsed["caption"],
-                "script": [
-                    {"slide": i+1, "text": line, "image_query": line, "start_ms": i*4000, "end_ms": (i+1)*4000}
-                    for i, line in enumerate(parsed["script"])
-                ],
                 "status": "SCRIPT_GENERATED",
                 "error_message": None,
                 "error_type": None,
