@@ -13,13 +13,11 @@ def top_news():
     collection = get_collection("news")
     if collection is None:
         return jsonify({"error": "Database connection error"}), 500
-    now = datetime.utcnow()
-    since = now - timedelta(hours=24)
-    # Query: created_at >= since, status in [VIDEO_GENERATED, POSTED]
+    # Query: status in [VIDEO_GENERATED, POSTED]
     query = {
-        "created_at": {"$gte": since},
         "status": {"$in": ["VIDEO_GENERATED", "POSTED"]}
     }
+    print(f"MongoDB query: {query}")  # Log the query being fired
     cursor = collection.find(query).sort([
         ("relevancy", -1), ("created_at", -1)
     ]).limit(10)

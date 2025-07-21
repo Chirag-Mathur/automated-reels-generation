@@ -76,7 +76,7 @@ Pipfile.lock
 *.log
 
 # Media
-*.mp4
+# *.mp4
 *.jpg
 *.png
 *.ttf
