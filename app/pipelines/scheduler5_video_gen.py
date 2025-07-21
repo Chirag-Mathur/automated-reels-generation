@@ -12,13 +12,14 @@ VIDEO_RESOLUTION = "1080x1920"
 # BACKGROUND_MUSIC_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media', 'background_music')
 # OUTPUTS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), '..', 'outputs')
 
-# app/ is the root directory
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+# We're inside /app/app/pipelines/
+# So go TWO levels up to reach /app/app/
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 
 FONT_PATH = os.path.join(BASE_DIR, 'media', 'fonts', 'Montserrat-SemiBold.ttf')
 BACKGROUND_VIDEO_DIR = os.path.join(BASE_DIR, 'media', 'background_video')
 BACKGROUND_MUSIC_DIR = os.path.join(BASE_DIR, 'media', 'background_music')
-OUTPUTS_DIR = os.path.join(BASE_DIR, 'outputs')  # outputs is inside app/
+OUTPUTS_DIR = os.path.join(BASE_DIR, 'outputs')  # outputs is inside /app/app/
 
 
 def get_background_video(domain: str, sentiment: str) -> str:
