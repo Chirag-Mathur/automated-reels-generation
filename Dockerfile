@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     gcc \
     libffi-dev \
     libssl-dev \
+    supervisor \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
@@ -28,5 +29,11 @@ ENV PYTHONUNBUFFERED=1
 # Load environment variables from .env manually (Railway will also inject them)
 ENV ENV_FILE=.env
 
-# Entry command: run both Flask app and cron scheduler
-CMD bash -c 'waitress-serve --host=0.0.0.0 --port=8080 endpoints.app:app & python -m app.scheduler.cron'
+# Expose both Flask and Streamlit ports
+EXPOSE 8080 8501
+
+# Add supervisor config
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Entry command: run Flask app, scheduler, and Streamlit dashboard
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
