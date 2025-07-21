@@ -106,4 +106,7 @@ def show_articles_as_tiles(df, tiles_per_row=3):
                             collection.update_one({'_id': __import__('bson').ObjectId(id)}, {'$set': {'status': 'POSTED'}})
                         st.rerun()
 
+# Show total count of filtered results
+st.markdown(f"**Total articles: {len(filtered_df)}**")
+
 show_articles_as_tiles(filtered_df[fields_to_show]) 
