@@ -11,7 +11,11 @@ schedule.every(15).minutes.do(fetch_and_store_rss_news)
 # Schedule the scheduler2 validation job every 19 minutes
 schedule.every(19).minutes.do(process_fetched_articles)
 # Schedule the script generation job every 2 hours
-schedule.every(2).hours.do(process_valid_articles)
+def run_script_and_video_generation():
+    process_valid_articles()
+    process_script_generated_articles()
+
+schedule.every(2).hours.do(run_script_and_video_generation)
 
 # def run_sequential_video_and_publish():
 #     process_script_generated_articles()
