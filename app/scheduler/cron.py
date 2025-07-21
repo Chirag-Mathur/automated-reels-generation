@@ -26,7 +26,7 @@ def run_all_steps():
     fetch_and_store_rss_news()
     process_fetched_articles()
     process_valid_articles()
-    process_script_generated_articles()
+    # process_script_generated_articles()
 
 # Schedule unified job every 15 minutes
 schedule.every(15).minutes.do(run_all_steps)
