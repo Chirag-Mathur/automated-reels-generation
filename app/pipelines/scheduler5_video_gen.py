@@ -7,10 +7,18 @@ from app.apis.gcs_client import GCSClient
 
 NEWS_COLLECTION = 'news'
 VIDEO_RESOLUTION = "1080x1920"
-FONT_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media', 'fonts', 'Montserrat-SemiBold.ttf')
-BACKGROUND_VIDEO_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media', 'background_video')
-BACKGROUND_MUSIC_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media', 'background_music')
-OUTPUTS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), '..', 'outputs')
+# FONT_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media', 'fonts', 'Montserrat-SemiBold.ttf')
+# BACKGROUND_VIDEO_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media', 'background_video')
+# BACKGROUND_MUSIC_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media', 'background_music')
+# OUTPUTS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), '..', 'outputs')
+
+# app/ is the root directory
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+
+FONT_PATH = os.path.join(BASE_DIR, 'media', 'fonts', 'Montserrat-SemiBold.ttf')
+BACKGROUND_VIDEO_DIR = os.path.join(BASE_DIR, 'media', 'background_video')
+BACKGROUND_MUSIC_DIR = os.path.join(BASE_DIR, 'media', 'background_music')
+OUTPUTS_DIR = os.path.join(BASE_DIR, 'outputs')  # outputs is inside app/
 
 
 def get_background_video(domain: str, sentiment: str) -> str:
