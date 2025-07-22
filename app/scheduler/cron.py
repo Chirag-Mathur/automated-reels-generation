@@ -13,7 +13,7 @@ schedule.every(19).minutes.do(process_fetched_articles)
 # Schedule the script generation job every 2 hours
 def run_script_and_video_generation():
     process_valid_articles()
-    process_script_generated_articles()
+    # process_script_generated_articles()
 
 schedule.every(1).hours.do(run_script_and_video_generation)
 
