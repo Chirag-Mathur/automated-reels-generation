@@ -15,7 +15,7 @@ def run_script_and_video_generation():
     process_valid_articles()
     # process_script_generated_articles()
 
-schedule.every(1).hours.do(run_script_and_video_generation)
+# schedule.every(1).hours.do(run_script_and_video_generation)
 
 # def run_sequential_video_and_publish():
 #     process_script_generated_articles()
