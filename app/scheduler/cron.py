@@ -7,9 +7,9 @@ from app.pipelines.scheduler6_publish import process_video_generated_articles
 from app.pipelines.scheduler2_validate_content import process_fetched_articles
 
 # Schedule the news fetch job every 15 minutes
-schedule.every(15).minutes.do(fetch_and_store_rss_news)
-# Schedule the scheduler2 validation job every 19 minutes
-schedule.every(19).minutes.do(process_fetched_articles)
+# schedule.every(15).minutes.do(fetch_and_store_rss_news)
+# # Schedule the scheduler2 validation job every 19 minutes
+# schedule.every(19).minutes.do(process_fetched_articles)
 # Schedule the script generation job every 2 hours
 def run_script_and_video_generation():
     process_valid_articles()
